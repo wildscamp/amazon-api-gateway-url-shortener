@@ -189,7 +189,13 @@ export default {
             Authorization: window.localStorage.getItem("cognitoIdentityToken"),
           },
         })
-        .then((response) => this.$store.commit("hydrateLinks", response.data))
+         .then((response) => {
+          // Sort the links by timestamp in descending order
+          const sortedLinks = response.data.sort((a, b) => {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+          });
+          this.$store.commit("hydrateLinks", sortedLinks);
+        })
         .catch(() => this.$store.commit("drainLinks"));
     },
     createLink: function () {

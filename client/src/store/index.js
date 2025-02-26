@@ -38,7 +38,7 @@ export default new Vuex.Store({
       state.links.length = 0;
     },
     addLink(state, link){
-      state.links.push(link);
+      state.links.unshift(link);
     },
     removeLink(state, ind){
       state.links.splice(ind, 1);
