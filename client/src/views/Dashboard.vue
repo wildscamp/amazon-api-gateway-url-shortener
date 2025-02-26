@@ -189,10 +189,37 @@ export default {
             Authorization: window.localStorage.getItem("cognitoIdentityToken"),
           },
         })
-         .then((response) => {
+        .then((response) => {
+          // Custom date parsing function
+          function parseCustomDate(dateString) {
+            const parts = dateString.split(/[:\/\s-]/);
+            const months = {
+              Jan: 0,
+              Feb: 1,
+              Mar: 2,
+              Apr: 3,
+              May: 4,
+              Jun: 5,
+              Jul: 6,
+              Aug: 7,
+              Sep: 8,
+              Oct: 9,
+              Nov: 10,
+              Dec: 11,
+            };
+            return new Date(
+              parts[2],
+              months[parts[1]],
+              parts[0],
+              parts[3],
+              parts[4],
+              parts[5]
+            );
+          }
+
           // Sort the links by timestamp in descending order
           const sortedLinks = response.data.sort((a, b) => {
-            return new Date(b.timestamp) - new Date(a.timestamp);
+            return parseCustomDate(b.timestamp) - parseCustomDate(a.timestamp);
           });
           this.$store.commit("hydrateLinks", sortedLinks);
         })
