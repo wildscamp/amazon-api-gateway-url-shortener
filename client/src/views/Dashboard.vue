@@ -192,7 +192,7 @@ export default {
         .then((response) => {
           // Custom date parsing function
           function parseCustomDate(dateString) {
-            const parts = dateString.split(/[:\/\s-]/);
+            const parts = dateString.split(/[:/\s-]/);
             const months = {
               Jan: 0,
               Feb: 1,
